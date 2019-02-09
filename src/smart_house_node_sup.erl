@@ -7,6 +7,8 @@
 
 -behaviour(supervisor).
 
+-include("hrl/sensor_params.hrl").
+
 %% API
 -export([start_link/0]).
 
@@ -44,10 +46,10 @@ sensor() ->
 	#{id => test_sensor,
 	  start => {sensor, start_link, [
           #{
-            m_name => test_sensor,
-            repeat_after => 3000,
-            unit => "C",
-            measurement_function => fun() -> rand:uniform(100) end
+            ?MEASUREMENT_NAME => test_sensor,
+            ?REPEAT_AFTER => 3000,
+            ?MEASUREMENT_FUN => fun(Max) -> rand:uniform(Max) end,
+            ?MEASUREMENT_FUN_ARGS => [70]
           }
       ]},
       restart => permanent,
