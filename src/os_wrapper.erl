@@ -2,12 +2,10 @@
 
 -export([
     get_cpu_temperature/0,
-    get_timestamp/0,
-    configure/2,
-    release/1
+    get_timestamp/0
 ]).
 
-get_cpu_temperature() -> 
+get_cpu_temperature() ->
     CmdResult = os:cmd("/opt/vc/bin/vcgencmd measure_temp"),
     CmdResultTrimed = lists:subtract(CmdResult, "temp='C\n"),
     {Temperature, []} = string:to_float(CmdResultTrimed),

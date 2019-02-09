@@ -37,17 +37,17 @@ init([]) ->
 %% Internal functions
 %%====================================================================
 
-sensors() -> 
+sensors() ->
 	[sensor()].
 
 sensor() ->
-	#{id => cpu_temperature_sensor,
+	#{id => test_sensor,
 	  start => {sensor, start_link, [
           #{
-            m_name => cpu_temperature_sensor,
+            m_name => test_sensor,
             repeat_after => 3000,
             unit => "C",
-            measurement_function => fun os_wrapper:get_cpu_temperature/0
+            measurement_function => fun() -> rand:uniform(100) end
           }
       ]},
       restart => permanent,

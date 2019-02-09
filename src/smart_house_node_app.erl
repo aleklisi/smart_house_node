@@ -15,8 +15,6 @@
 %%====================================================================
 
 start(_StartType, _StartArgs) ->
-    mnesia:create_schema([node()]),
-	mnesia:start(),
     smart_house_node_sup:start_link().
 
 %%--------------------------------------------------------------------

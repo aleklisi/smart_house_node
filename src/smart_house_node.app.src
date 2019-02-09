@@ -5,9 +5,13 @@
   {mod, {smart_house_node_app, []}},
   {applications,
    [kernel,
-    stdlib
+    stdlib,
+    lager,
+    exometer
    ]},
-  {env,[]},
+  {env,[
+      {exometer_predefined, []}
+  ]},
   	{modules, []},
 
   {licenses, ["Apache 2.0"]},
