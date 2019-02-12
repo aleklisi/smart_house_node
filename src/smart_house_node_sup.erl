@@ -40,18 +40,5 @@ init([]) ->
 %%====================================================================
 
 sensors() ->
-	[sensor()].
-
-sensor() ->
-	#{id => test_sensor,
-	  start => {sensor, start_link, [
-          #{
-            ?MEASUREMENT_NAME => test_sensor,
-            ?REPEAT_AFTER => 3000,
-            ?MEASUREMENT_FUN => fun(Max) -> rand:uniform(Max) end,
-            ?MEASUREMENT_FUN_ARGS => [70]
-          }
-      ]},
-      restart => permanent,
-      shutdown => brutal_kill,
-      type => worker}.
+	[test_sensor:config(#{}),
+    cpu_temperature:config(#{?REPEAT_AFTER => 1000})].

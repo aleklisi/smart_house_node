@@ -22,6 +22,7 @@ default_terminate_fun() -> ok.
 
 start_link(Args) ->
     MeasurementName = maps:get(?MEASUREMENT_NAME, Args),
+    lager:warning("Sensor ~p starting", [MeasurementName]),
     gen_server:start_link({local, MeasurementName}, ?MODULE,
 			  Args, []).
 
@@ -95,4 +96,4 @@ exometer_write(MetricName, Value) ->
     R.
 
 exometer_make_name(MeasurementName) ->
-    [node(), MeasurementName].
+    [MeasurementName].

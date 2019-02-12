@@ -1,4 +1,4 @@
--module(os_wrapper).
+-module(rpi_os_wrapper).
 
 -export([
     get_cpu_temperature/0,
