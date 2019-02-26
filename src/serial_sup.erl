@@ -1,16 +1,13 @@
-%%%-------------------------------------------------------------------
-%% @doc smart_house_node top level supervisor.
-%% @end
-%%%-------------------------------------------------------------------
-
--module(smart_house_node_sup).
+-module(serial_sup).
 
 -behaviour(supervisor).
 
 -include("hrl/sensor_params.hrl").
 
--export([start_link/0]).
+%% API
+-export([start_link/0, config/0]).
 
+%% Supervisor callbacks
 -export([init/1]).
 
 -define(SERVER, ?MODULE).
@@ -26,16 +23,23 @@ start_link() ->
 %% Supervisor callbacks
 %%====================================================================
 
+config() ->
+ #{id => serial_sup,
+	  start => {serial_sup, start_link, []},
+      restart => permanent,
+      shutdown => brutal_kill,
+      type => supervisor}.
+
 init([]) ->
-    {ok, {{one_for_all, 0, 1}, sensors()}}.
+    {ok, {{one_for_all, 0, 1}, process_sensors()}}.
 
 %%====================================================================
 %% Internal functions
 %%====================================================================
 
-sensors() ->
+process_sensors() ->
 	[
-        test_sensor:config(#{}),
-        cpu_temperature:config(#{?REPEAT_AFTER => 1000}),
-        serial_sup:config()
+        serial_reader:config(#{open => "/dev/ttyACM0", speed => 9600}),
+        pasive_sensor:config(#{?MEASUREMENT_NAME => humidity}),
+        pasive_sensor:config(#{?MEASUREMENT_NAME => temperature})
     ].
