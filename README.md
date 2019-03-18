@@ -9,28 +9,41 @@ sudo apt-get update && sudo apt-get install erlang erlang-dev -y
 # Install Erlang Serial
 
 cd ~/Documents/Erlang/
+
 git clone https://github.com/tonyg/erlang-serial
+
 cd erlang-serial/
+
 make
+
 sudo DESTDIR=/usr/lib make install
 
 # Install rebar3
 
 wget https://s3.amazonaws.com/rebar3/rebar3 && chmod +x rebar3
+
 ./rebar3 local install
+
 export PATH=/home/pi/.cache/rebar3/bin:$PATH
 
 # Setup smart_house_node 
 
 Copy project 
+
 cd Documents/
+
 mkdir Erlang
+
 cd Erlang/
+
 git clone https://github.com/aleklisi/smart_house_node.git
+
 cd smart_house_node/
+
 rebar3 compile
 
 Go to priv/sys.comfig
+
 Change exometer params and lager params to your setup.
 For development use:
 
