@@ -26,9 +26,9 @@ wget https://s3.amazonaws.com/rebar3/rebar3 && chmod +x rebar3
 
 export PATH=/home/pi/.cache/rebar3/bin:$PATH
 
-# Setup smart_house_node 
+# Setup smart_house_node
 
-Copy project 
+Copy project
 
 cd Documents/
 

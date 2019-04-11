@@ -7,7 +7,7 @@
 -ignore_xref([start_link/1]).
 
 -export([start_link/1, config/1]).
--export([handle_call/3, handle_cast/2, 
+-export([handle_call/3, handle_cast/2,
          handle_info/2, init/1, terminate/2]).
 
 -define(SERIAL, serial_port).
@@ -32,26 +32,28 @@ init(Args) ->
     lager:warning("Sensor serial starting", []),
     {ok, Args#{?SERIAL => SerialPort, ?JSONLIST => []}}.
 
-handle_info({data, Bytes}, State) ->
+handle_info({data, Bytes}, State = #{ ?PROCESS_GROUP_NAME := ProcessGroupName}) ->
     MaybeJsonEnd = binary:bin_to_list(Bytes),
     NewJson = maps:get(?JSONLIST, State) ++ MaybeJsonEnd,
     NewState = case lists:last(MaybeJsonEnd) of
-        $\n -> 
+        $\n ->
             NewBinaryJson = list_to_binary(NewJson),
-            send_json(NewBinaryJson),
+            send_json(NewBinaryJson, ProcessGroupName),
             State#{ ?JSONLIST => [] };
-        _ -> 
+        _ ->
             State#{ ?JSONLIST => NewJson }
     end,
     {noreply, NewState}.
 
-send_json(Json) -> 
-    pg2:create(?PROCESS_GROUP_NAME),
-    [ PID ! {?JSON_MESSAGE, Json} || PID <- pg2:get_local_members(?PROCESS_GROUP_NAME) ].
+send_json(Json, ProcessGroupName) ->
+    pg2:create(ProcessGroupName),
+    [ PID ! {?MESSAGE, Json} || PID <- pg2:get_local_members(ProcessGroupName) ].
 
-handle_call(_Args, _From, State) -> {reply, ok, State}.
+handle_call(_Args, _From, _State) ->
+    erlang:error("Not implemented").
 
-handle_cast(_Args, State) -> {noreply, State}.
+handle_cast(_Args, _State) ->
+    erlang:error("Not implemented").
 
 terminate(Reason, _State) ->
     lager:warning("Sensor serial terminated with reason ~p", [Reason]),

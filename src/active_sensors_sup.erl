@@ -1,4 +1,4 @@
--module(serial_sup).
+-module(active_sensors_sup).
 
 -behaviour(supervisor).
 
@@ -8,8 +8,6 @@
 %% API
 -export([start_link/1, config/1]).
 -export([init/1]).
-
--define(SERVER, ?MODULE).
 
 %%====================================================================
 %% API functions
@@ -41,10 +39,8 @@ init(Children) ->
 %% Internal functions
 %%====================================================================
 
-make_children({serial, ReaderModule, ReaderConfig, Children}) ->
-    PasiveComponents =
-        lists:map(fun make_passive_child/1, Children),
-    [ ReaderModule:config(ReaderConfig) | PasiveComponents].
-
+make_children({active_sensors, Children}) ->
+        lists:map(fun make_passive_child/1, Children).
+       
 make_passive_child({Module, Args}) ->
     Module:config(Args).

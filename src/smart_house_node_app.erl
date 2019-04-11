@@ -15,7 +15,7 @@
 %%====================================================================
 
 start(_StartType, _StartArgs) ->
-    smart_house_node_sup:start_link().
+    smart_house_node_sup:start_link(config:config()).
 
 %%--------------------------------------------------------------------
 stop(_State) ->
