@@ -2,15 +2,16 @@
 
 -behaviour(gen_server).
 
--include("hrl/pasive_sensor.hrl").
+-include("hrl/passive_component.hrl").
+
+-ignore_xref([start_link/1]).
+
+-export([start_link/1, config/1]).
+-export([handle_call/3, handle_cast/2, 
+         handle_info/2, init/1, terminate/2]).
 
 -define(SERIAL, serial_port).
 -define(JSONLIST, json_list).
-
--export([start_link/1, config/1]).
-
--export([handle_call/3, handle_cast/2, 
-         handle_info/2, init/1, terminate/2]).
 
 config(Args) ->
 	#{id => serial_reader,

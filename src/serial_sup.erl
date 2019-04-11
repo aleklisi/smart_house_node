@@ -4,10 +4,9 @@
 
 -include("hrl/sensor_params.hrl").
 
+-ignore_xref([start_link/1]).
 %% API
--export([start_link/0, config/0]).
-
-%% Supervisor callbacks
+-export([start_link/1, config/1]).
 -export([init/1]).
 
 -define(SERVER, ?MODULE).
