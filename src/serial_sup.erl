@@ -31,7 +31,11 @@ config() ->
       type => supervisor}.
 
 init([]) ->
-    {ok, {{one_for_all, 0, 1}, process_sensors()}}.
+    {ok, {#{
+        strategy => one_for_one,
+        intensity => 10,
+        period => 5
+    }, process_sensors()}}.
 
 %%====================================================================
 %% Internal functions
@@ -40,6 +44,7 @@ init([]) ->
 process_sensors() ->
 	[
         serial_reader:config(#{open => "/dev/ttyACM0", speed => 9600}),
-        pasive_sensor:config(#{?MEASUREMENT_NAME => humidity}),
-        pasive_sensor:config(#{?MEASUREMENT_NAME => temperature})
+        pasive_sensor:config(#{?MEASUREMENT_NAME => pm10}),
+        pasive_sensor:config(#{?MEASUREMENT_NAME => pm25}),
+        pasive_sensor:config(#{?MEASUREMENT_NAME => pm25only})
     ].
