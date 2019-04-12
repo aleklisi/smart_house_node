@@ -12,7 +12,7 @@
 
 config(State = #{?ID := Id}) ->
 	#{id => Id,
-	  start => {pasive_sensor, start_link, [State]},
+	  start => {passive_component, start_link, [State]},
       restart => permanent,
       shutdown => brutal_kill,
       type => worker}.

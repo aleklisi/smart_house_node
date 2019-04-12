@@ -1,5 +1,7 @@
 -module(config).
 
+-include("hrl/passive_component.hrl").
+
 -export([config/0]).
 
 config() ->
@@ -7,11 +9,13 @@ config() ->
     {
         serial,
         serial_reader,
-        #{open => #{open => "/dev/ttyACM0", speed => 9600}},
+        #{open => "/dev/ttyACM0", speed => 9600, ?PROCESS_GROUP_NAME => serial_based_sensors},
         [
-            {exometer_reporter, pm10},
-            {exometer_reporter, pm25},
-            {exometer_reporter, pm25only}
+            {exometer_reporter, {humidity, serial_based_sensors}},
+            {exometer_reporter, {temperature, serial_based_sensors}},
+            {exometer_reporter, {mq3, serial_based_sensors}},
+            {exometer_reporter, {mq5, serial_based_sensors}},
+            {exometer_reporter, {mq135, serial_based_sensors}}
         ]
     },
     {

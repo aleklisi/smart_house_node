@@ -3,23 +3,24 @@
 -include("hrl/passive_component.hrl").
 -export([config/1]).
 
-config(MeasurementName) ->
+config({MeasurementName, ProccessGroupName}) ->
     State = #{
         ?ID => MeasurementName,
-        ?INIT_FUN => fun init/2,
+        ?INIT_FUN => fun init/1,
         ?INIT_FUN_ARGS => [],
-        ?ACTION_FUN => fun action/3,
-        ?ACTION_FUN_ARGS => []
+        ?ACTION_FUN => fun action/2,
+        ?ACTION_FUN_ARGS => [],
+        ?PROCESS_GROUP_NAME => ProccessGroupName
     },
     passive_component:config(State).
 
-init(State, []) ->
+init(State) ->
     MeasurementName = maps:get(?ID, State),
     lager:warning("Pasive sensor ~p starting", [MeasurementName]),
     exometer_wrapper:exometer_init_metric(MeasurementName),
     State.
 
-action(State, Message, []) ->
+action(State, Message) ->
     MeasurementName = maps:get(?ID, State),
     lager:info("Message is", [Message]),
     JsonMap = jsx:decode(Message, [return_maps]),
