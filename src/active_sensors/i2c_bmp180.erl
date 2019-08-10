@@ -8,15 +8,24 @@
 -export([config/1]).
 
 config(#{?REPEAT_AFTER := Time}) ->
-    #{id => i2c_bmp180,
-	  start => {sensor, start_link, [
-          #{
-            ?INIT_SENSOR_FUN => fun init/0,
-            ?MEASUREMENT_NAME => i2c_bmp180,
-            ?REPEAT_AFTER => Time,
-            ?MEASUREMENT_FUN => fun get_temperature/0,
-            ?MEASUREMENT_FUN_ARGS => []
-          }
+    #{
+        id => i2c_bmp180,
+	    start => {sensor, start_link, [
+            #{
+                ?SENSOR_NAME => bmp180,
+                ?INIT_SENSOR_FUN => fun init/0,
+                ?MEASUREMENTS_NAMES =>
+                    [
+                        bmp180_temperature
+                    ],
+                ?REPEAT_AFTER => Time,
+                ?MEASUREMENT_FUN =>
+                    fun() ->
+                        [
+                            get_temperature()
+                        ]
+                    end
+            }
       ]},
       restart => permanent,
       shutdown => brutal_kill,
@@ -36,7 +45,7 @@ get_temperature() ->
     X1 = (UT - read(ac6, short, unsigned)) * read(ac5, short, unsigned) / math:pow(2, 15),
     X2 = read(mc, short, signed) * math:pow(2, 11) / (X1 + read(md, short, signed)),
     B5 = X1 + X2,
-    T = (B5 + 8) / math:pow(2, 4) / 4, % I do not know why but the result is 4 times too big 
+    T = (B5 + 8) / math:pow(2, 4) / 4, % I do not know why but the result is 4 times too big
     T.
 
 read(Register, Size, Signed) ->

@@ -6,14 +6,15 @@
 %% Obligatory.
 %% @spec atom()
 %% @end
--define(SENSOR_NAME, s_name).
+-define(SENSOR_NAME, sensor_name).
 
 %% @doc A list of names (atoms) of measurements for each measurement,
 %% for most of sensors it will be just 1 element list.
 %% Obligatory.
+%% Default default_sensor_name.
 %% @spec [atom()]
 %% @end
--define(MEASUREMENTS_NAMES, m_names).
+-define(MEASUREMENTS_NAMES, measurement_names).
 
 %% @doc Set custom repeat loop time.
 %% Optional.
