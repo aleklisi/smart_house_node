@@ -1,6 +1,8 @@
 -module(active_sensors_sup).
 
--behaviour(supervisor).
+-author('alek.lisiecki@gmail.com').
+
+-behavior(supervisor).
 
 -include("hrl/sensor_params.hrl").
 
@@ -41,6 +43,6 @@ init(Children) ->
 
 make_children({active_sensors, Children}) ->
         lists:map(fun make_passive_child/1, Children).
-       
+
 make_passive_child({Module, Args}) ->
     Module:config(Args).

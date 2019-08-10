@@ -1,5 +1,7 @@
 -module(exometer_reporter).
 
+-author('alek.lisiecki@gmail.com').
+
 -include("hrl/passive_component.hrl").
 -export([config/1]).
 

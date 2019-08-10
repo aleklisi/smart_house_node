@@ -1,3 +1,6 @@
+
+-author('alek.lisiecki@gmail.com').
+
 -define(ID, id).
 
 -define(INIT_FUN, init_fun).

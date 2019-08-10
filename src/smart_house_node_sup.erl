@@ -1,28 +1,16 @@
-%%%-------------------------------------------------------------------
-%% @doc smart_house_node top level supervisor.
-%% @end
-%%%-------------------------------------------------------------------
-
 -module(smart_house_node_sup).
 
--behaviour(supervisor).
+-author('alek.lisiecki@gmail.com').
+
+-behavior(supervisor).
 
 -include("hrl/sensor_params.hrl").
 
 -export([start_link/1]).
-
 -export([init/1]).
-
-%%====================================================================
-%% API functions
-%%====================================================================
 
 start_link(Config) ->
     supervisor:start_link({local, ?MODULE}, ?MODULE, Config).
-
-%%====================================================================
-%% Supervisor callbacks
-%%====================================================================
 
 init(Config) ->
     Children = lists:map(fun make_child/1, Config),

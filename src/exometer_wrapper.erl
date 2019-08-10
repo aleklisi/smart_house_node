@@ -1,5 +1,7 @@
 -module(exometer_wrapper).
 
+-author('alek.lisiecki@gmail.com').
+
 -export(
     [
         exometer_init_metric/1,

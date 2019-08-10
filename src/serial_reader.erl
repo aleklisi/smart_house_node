@@ -1,6 +1,8 @@
 -module(serial_reader).
 
--behaviour(gen_server).
+-author('alek.lisiecki@gmail.com').
+
+-behavior(gen_server).
 
 -include("hrl/passive_component.hrl").
 

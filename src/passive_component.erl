@@ -1,14 +1,20 @@
 -module(passive_component).
 
--behaviour(gen_server).
+-author('alek.lisiecki@gmail.com').
+
+-behavior(gen_server).
 
 -include("hrl/passive_component.hrl").
 
 -ignore_xref([start_link/1]).
 
--export([start_link/1, config/1]).
--export([handle_call/3, handle_cast/2,
-         handle_info/2, init/1, terminate/2]).
+-export([start_link/1,
+         config/1]).
+-export([handle_call/3,
+         handle_cast/2,
+         handle_info/2,
+         init/1,
+         terminate/2]).
 
 config(State = #{?ID := Id}) ->
 	#{id => Id,
@@ -28,10 +34,10 @@ init(State) ->
         ?PROCESS_GROUP_NAME := ProcessGroupName
     } = State,
     InitState = erlang:apply(InitFun, [State | InitFunArgs]),
-    lager:warning("Pasive component ~p starting", [Id]),
+    lager:warning("Passive component ~p starting", [Id]),
     pg2:create(ProcessGroupName),
     pg2:join(ProcessGroupName, self()),
-    lager:info("Pasive component ~p joining group ~p", [Id, ProcessGroupName]),
+    lager:info("Passive component ~p joining group ~p", [Id, ProcessGroupName]),
     {ok, InitState}.
 
 handle_info({?MESSAGE, Message}, State) ->

@@ -1,12 +1,14 @@
 -module(serial_sup).
 
--behaviour(supervisor).
+-author('alek.lisiecki@gmail.com').
+
+-behavior(supervisor).
 
 -include("hrl/sensor_params.hrl").
 
 -ignore_xref([start_link/1]).
-%% API
--export([start_link/1, config/1]).
+-export([start_link/1,
+         config/1]).
 -export([init/1]).
 
 -define(SERVER, ?MODULE).
@@ -42,9 +44,8 @@ init(Children) ->
 %%====================================================================
 
 make_children({serial, ReaderModule, ReaderConfig, Children}) ->
-    PasiveComponents =
-        lists:map(fun make_passive_child/1, Children),
-    [ ReaderModule:config(ReaderConfig) | PasiveComponents].
+    PassiveComponents = lists:map(fun make_passive_child/1, Children),
+    [ ReaderModule:config(ReaderConfig) | PassiveComponents].
 
 make_passive_child({Module, Args}) ->
     Module:config(Args).
