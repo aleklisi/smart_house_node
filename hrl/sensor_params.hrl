@@ -1,23 +1,62 @@
-%% consts
+%% @doc Internal message for active sensors to work in a loop.
+%% @end
 -define(SAVE_MEASUREMENT_MESSAGE, save_measurement).
 
--define(DEFAULT_REPEATE_TIME, 5000).
+%% @doc Default repeated time is set to 5 seconds.
+%% @end
+-define(DEFAULT_REPEAT_TIME, 5000).
 
-%% state elements
+%% @doc Name of a sensor used to name process,
+%% useful for debug, trace or view supervision tree.
+%% @spec atom()
+%% @end
+-define(SENSOR_NAME, s_name).
 
--define(MEASUREMENT_NAME, m_name).
+%% @doc A list of names (atoms) of measurements for each measurement,
+%% for most of sensors it will be just 1 element list.
+%% @spec [atom()]
+%% @end
+-define(MEASUREMENTS_NAMES, m_names).
 
+%% @doc Set custom repeat loop time.
+%% @spec pos_integer()
+%% @end
 -define(REPEAT_AFTER, repeat_after).
 
+%% @doc A function that does actual measurements.
+%% @spec fun([any]) -> [number()].
+%% @end
 -define(MEASUREMENT_FUN, measurement_function).
 
+%% @doc A measurement function constance extra arguments passed in config.
+%% Default is `[]`.
+%% @spec [any()].
+%% @end
 -define(MEASUREMENT_FUN_ARGS,
 	measurement_function_arguments).
 
--define(TERMONATE_SENSOR_FUN, terminate_fun).
+%% @doc A function that is executed on sensor terminate.
+%% Optional.
+%% Default `fun() -> ok.`.
+%% @spec fun([any]) -> any().
+%% @end
+-define(TERMINATE_SENSOR_FUN, terminate_fun).
 
+%% @doc A function that is executed on sensor init.
+%% Optional.
+%% Default `fun() -> ok.`.
+%% @spec fun([any]) -> any().
+%% @end
 -define(INIT_SENSOR_FUN, init_fun).
 
--define(TERMONATE_SENSOR_FUN_ARGS, terminate_fun_args).
+%% @doc A terminate function constance extra arguments passed in config.
+%% Default is `[]`.
+%% @spec [any()].
+%% @end
+-define(TERMINATE_SENSOR_FUN_ARGS, terminate_fun_args).
 
+%% @doc An init function constance extra arguments passed in config.
+%% Default is `[]`.
+%% @spec [any()].
+%% @end
 -define(INIT_SENSOR_FUN_ARGS, init_fun_args).
