@@ -1,5 +1,5 @@
 {application, smart_house_node,
- [{description, ""},
+ [{description, "Erlang application for managing sensors with Raspberry Pi."},
   {vsn, "0.1.0"},
   {registered, []},
   {mod, {smart_house_node_app, []}},
