@@ -24,7 +24,7 @@ init(State) ->
 
 action(State, Message) ->
     MeasurementName = maps:get(?ID, State),
-    lager:info("Message is", [Message]),
+    lager:info("Message is ~p", [Message]),
     JsonMap = jsx:decode(Message, [return_maps]),
     lager:info("Decoded json is ~p", [JsonMap]),
     Value = maps:get(atom_to_binary(MeasurementName, utf8), JsonMap),
