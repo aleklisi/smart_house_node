@@ -7,13 +7,14 @@
 
 -export([config/1]).
 
-config(#{?REPEAT_AFTER := Time}) ->
+config(#{?REPEAT_AFTER := Time, device_name := DeviceName}) ->
     #{
         id => i2c_bmp180,
 	    start => {sensor, start_link, [
             #{
                 ?SENSOR_NAME => bmp180,
-                ?INIT_SENSOR_FUN => fun init/0,
+                ?INIT_SENSOR_FUN => fun init/1,
+                ?INIT_SENSOR_FUN_ARGS => [DeviceName],
                 ?MEASUREMENTS_NAMES =>
                     [
                         bmp180_temperature
@@ -31,8 +32,8 @@ config(#{?REPEAT_AFTER := Time}) ->
       shutdown => brutal_kill,
       type => worker}.
 
-init() ->
-    {ok, IoExpander} = i2c:start_link("i2c-1", 16#77),
+init(DeviceName) ->
+    {ok, IoExpander} = i2c:start_link(DeviceName, 16#77),
     register(?SENSOR_REGISTERED_NAME, IoExpander),
     link(IoExpander).
 
