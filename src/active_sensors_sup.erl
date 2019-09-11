@@ -42,7 +42,7 @@ init(Children) ->
 %%====================================================================
 
 make_children({active_sensors, Children}) ->
-        lists:map(fun make_passive_child/1, Children).
+        lists:map(fun make_active_child/1, Children).
 
-make_passive_child({Module, Args}) ->
+make_active_child({Module, Args}) ->
     Module:config(Args).

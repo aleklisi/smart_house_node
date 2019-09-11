@@ -20,7 +20,7 @@ exometer_init_metric(MeasurementName) ->
 
 exometer_write(MetricName, Value) ->
     R = exometer:update(MetricName, Value),
-    lager:info("Exometer write ~p\tMetricName = ~p\n",
+    lager:debug("Exometer write ~p\tMetricName = ~p\n",
 	       [R, MetricName]),
     R.
 

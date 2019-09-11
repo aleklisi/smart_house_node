@@ -58,5 +58,5 @@ handle_cast(_Args, _State) ->
     erlang:error("Not implemented").
 
 terminate(Reason, _State) ->
-    lager:warning("Passive component terminated with reason ~p", [Reason]),
+    lager:error("Passive component terminated with reason ~p", [Reason]),
     ok.

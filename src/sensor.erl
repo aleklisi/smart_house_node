@@ -82,7 +82,7 @@ terminate(Reason, State) ->
         ?TERMINATE_SENSOR_FUN := TerminateSensorFun,
         ?TERMINATE_SENSOR_FUN_ARGS := TerminateSensorFunArgs
     } = State,
-    lager:warning("Sensor ~p terminated with reason ~p", [SensorName, Reason]),
+    lager:error("Sensor ~p terminated with reason ~p", [SensorName, Reason]),
     apply(TerminateSensorFun, TerminateSensorFunArgs),
     ok.
 

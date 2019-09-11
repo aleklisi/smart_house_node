@@ -13,7 +13,7 @@
          handle_info/2, init/1, terminate/2]).
 
 -define(SERIAL, serial_port).
--define(JSONLIST, json_list).
+-define(JSON_LIST, json_list).
 
 config(Args) ->
 	#{id => serial_reader,
@@ -32,18 +32,18 @@ init(Args) ->
     } = Args,
     SerialPort = serial:start([{open, DevicePath}, {speed, Speed}]),
     lager:warning("Sensor serial starting", []),
-    {ok, Args#{?SERIAL => SerialPort, ?JSONLIST => []}}.
+    {ok, Args#{?SERIAL => SerialPort, ?JSON_LIST => []}}.
 
 handle_info({data, Bytes}, State = #{ ?PROCESS_GROUP_NAME := ProcessGroupName}) ->
     MaybeJsonEnd = binary:bin_to_list(Bytes),
-    NewJson = maps:get(?JSONLIST, State) ++ MaybeJsonEnd,
+    NewJson = maps:get(?JSON_LIST, State) ++ MaybeJsonEnd,
     NewState = case lists:last(MaybeJsonEnd) of
         $\n ->
             NewBinaryJson = list_to_binary(NewJson),
             send_json(NewBinaryJson, ProcessGroupName),
-            State#{ ?JSONLIST => [] };
+            State#{ ?JSON_LIST => [] };
         _ ->
-            State#{ ?JSONLIST => NewJson }
+            State#{ ?JSON_LIST => NewJson }
     end,
     {noreply, NewState}.
 
@@ -58,5 +58,5 @@ handle_cast(_Args, _State) ->
     erlang:error("Not implemented").
 
 terminate(Reason, _State) ->
-    lager:warning("Sensor serial terminated with reason ~p", [Reason]),
+    lager:error("Sensor serial terminated with reason ~p", [Reason]),
     ok.
