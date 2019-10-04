@@ -68,13 +68,11 @@ handle_info(?SAVE_MEASUREMENT_MESSAGE, State) ->
         ValuesWithNames),
     {noreply, State}.
 
-handle_call(_Args, _From, State) ->
-    erlang:error(not_implemented),
-    {reply, ok, State}.
+handle_call(_Args, _From, _State) ->
+    erlang:error("not_implemented").
 
-handle_cast(_Args, State) ->
-    erlang:error(not_implemented),
-    {noreply, State}.
+handle_cast(_Args, _State) ->
+    erlang:error("not_implemented").
 
 terminate(Reason, State) ->
     #{

@@ -10,7 +10,8 @@
 
 -export([start_link/1,
          config/1]).
--export([handle_call/3,
+-export([
+        handle_call/3,
          handle_cast/2,
          handle_info/2,
          init/1,
