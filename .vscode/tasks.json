@@ -1,0 +1,13 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "gradualizer",
+            "command": "rebar3 gradualizer",
+            "problemMatcher": [
+                "$eslint-compact"
+            ]
+        }
+    ]
+  }
