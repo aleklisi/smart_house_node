@@ -42,7 +42,9 @@ handle_info(tick, State) ->
    {noreply, State};
 handle_info({measurements, Measurements}, State) ->
    logger:info("~p\n", Measurements),
-   {noreply, State}.
+   {noreply, State};
+handle_info(Info, _State) ->
+   erlang:error({unexpected_message, Info}).
 
 %%%%%%%%%%%
 % Not used 
