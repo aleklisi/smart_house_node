@@ -44,7 +44,7 @@ rebar3 compile
 
 Go to priv/sys.comfig
 
-Change exometer params and lager params to your setup.
+Change exometer params to your setup.
 For development use:
 
 rebar3 shell

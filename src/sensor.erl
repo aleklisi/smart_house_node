@@ -25,9 +25,8 @@ default_terminate_fun() -> ok.
 %%====================================================================
 
 start_link(Args) ->
-    check_args(Args),
     SensorsName = maps:get(?SENSOR_NAME, Args),
-    lager:warning("Sensor ~p starting", [SensorsName]),
+    logger:warning("Sensor ~p starting", [SensorsName]),
     gen_server:start_link({local, SensorsName}, ?MODULE, Args, []).
 
 %%====================================================================
@@ -47,7 +46,7 @@ init(Args) ->
         fun exometer_wrapper:exometer_init_metric/1,
         MeasurementsNames),
     erlang:send_after(RepeatAfter, self(), ?SAVE_MEASUREMENT_MESSAGE),
-    lager:info("Sensor ~p started", [SensorName]),
+    logger:info("Sensor ~p started", [SensorName]),
     {ok, ArgsWithDefaults}.
 
 handle_info(?SAVE_MEASUREMENT_MESSAGE, State) ->
@@ -80,7 +79,7 @@ terminate(Reason, State) ->
         ?TERMINATE_SENSOR_FUN := TerminateSensorFun,
         ?TERMINATE_SENSOR_FUN_ARGS := TerminateSensorFunArgs
     } = State,
-    lager:error("Sensor ~p terminated with reason ~p", [SensorName, Reason]),
+    logger:error("Sensor ~p terminated with reason ~p", [SensorName, Reason]),
     apply(TerminateSensorFun, TerminateSensorFunArgs),
     ok.
 
@@ -98,14 +97,3 @@ default_state() ->
         ?TERMINATE_SENSOR_FUN => fun default_terminate_fun/0,
         ?TERMINATE_SENSOR_FUN_ARGS => []
     }.
-
-check_args(Args) ->
-    Checks =
-    [
-        fun check_sensor_name_is_not_default/1
-    ],
-    lists:foreach(fun(Check) -> Check(Args) end, Checks).
-
-check_sensor_name_is_not_default(#{?SENSOR_NAME := default_sensor_name}) ->
-    erlang:error("Sensor name is required parameter");
-check_sensor_name_is_not_default(_) -> ok.
