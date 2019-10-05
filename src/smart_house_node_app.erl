@@ -7,7 +7,8 @@
 -export([start/2, stop/1]).
 
 start(_StartType, _StartArgs) ->
-    smart_house_node_sup:start_link(config:config()).
+    {ok, Config} = application:get_env(smart_house_node, config),
+    smart_house_node_sup:start_link(Config).
 
 stop(_State) ->
     ok.
