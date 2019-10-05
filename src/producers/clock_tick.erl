@@ -17,11 +17,11 @@
     terminate/2,
     code_change/3]).
 
-child_spec([Name, SendAfter, Msg, ProcGroupName]) ->
+child_spec([Name, SendAfter, ProcGroupName]) ->
     #{
         id => Name,
         start => 
-            {?MODULE, start_link, [[Name, SendAfter, Msg, ProcGroupName]]},
+            {?MODULE, start_link, [[Name, SendAfter, ProcGroupName]]},
         restart => permanent,
         shutdown => brutal_kill,
         type => worker,
@@ -31,16 +31,18 @@ child_spec([Name, SendAfter, Msg, ProcGroupName]) ->
 start_link([Name | T]) ->
    gen_server:start_link({local, Name}, ?MODULE, T, []).
 
-init(Args = [SendAfter, Msg, ProcGroupName]) ->
+init(Args = [SendAfter, ProcGroupName]) ->
     pg2:create(ProcGroupName),
-    erlang:send_after(SendAfter, self(), Msg),
+    erlang:send_after(SendAfter, self(), tick),
     {ok, Args}.
 
-handle_info(Msg, State = [SendAfter, Msg, ProcGroupName]) ->
-    erlang:send_after(SendAfter, self(), Msg),
+handle_info(tick, State = [SendAfter, ProcGroupName]) ->
+    erlang:send_after(SendAfter, self(), tick),
     Consumers = pg2:get_local_members(ProcGroupName),
-    lists:foreach(fun(Pid) -> Pid ! Msg end, Consumers),
-   {noreply, State}.
+    lists:foreach(fun(Pid) -> Pid ! tick end, Consumers),
+   {noreply, State};
+handle_info(Info, _State) ->
+    erlang:error({"Unexpected message", Info}).
 
 %%%%%%%%%%%
 % Not used 
