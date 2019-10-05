@@ -2,6 +2,10 @@
 
 -behaviour(gen_server).
 
+-ignore_xref([
+    child_spec/1,
+    start_link/1]).
+
 %% API
 -export([
     child_spec/1,

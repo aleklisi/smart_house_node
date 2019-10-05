@@ -4,8 +4,13 @@
 
 -behavior(supervisor).
 
--export([start_link/1]).
--export([init/1]).
+-ignore_xref([
+    child_spec/1,
+    start_link/1]).
+
+-export([
+    start_link/1,
+    init/1]).
 
 start_link(Config) ->
     supervisor:start_link({local, ?MODULE}, ?MODULE, Config).

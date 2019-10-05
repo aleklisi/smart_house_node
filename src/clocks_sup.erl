@@ -4,6 +4,10 @@
 
 -behavior(supervisor).
 
+-ignore_xref([
+    child_spec/1,
+    start_link/1]).
+
 -export([
     start_link/1,
     init/1,
@@ -35,5 +39,5 @@ init(Config) ->
 %% Internal functions
 %%====================================================================
 
-make_child({Module,Opts}) ->
+make_child({Module, Opts}) ->
     Module:child_spec(Opts).
