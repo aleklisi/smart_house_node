@@ -1,11 +1,24 @@
--module(smart_house_node_sup).
+-module(clocks_sup).
 
 -author('alek.lisiecki@gmail.com').
 
 -behavior(supervisor).
 
--export([start_link/1]).
--export([init/1]).
+-export([
+    start_link/1,
+    init/1,
+    child_spec/1]).
+
+child_spec({Name, Children}) ->
+    #{
+        id => Name,
+        start => 
+            {?MODULE, start_link, [Children]},
+        restart => permanent,
+        shutdown => brutal_kill,
+        type => worker,
+        modules => [?MODULE]
+    }.
 
 start_link(Config) ->
     supervisor:start_link({local, ?MODULE}, ?MODULE, Config).
