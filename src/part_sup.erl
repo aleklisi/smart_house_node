@@ -1,4 +1,4 @@
--module(clocks_sup).
+-module(part_sup).
 
 -author('alek.lisiecki@gmail.com').
 
