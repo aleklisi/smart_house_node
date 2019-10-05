@@ -17,30 +17,31 @@
     terminate/2,
     code_change/3]).
 
-child_spec([Name, MessageId, ConsumerGroupName]) ->
+child_spec([Name, ConsumerGroupName]) ->
     #{
         id => Name,
         start => 
-            {?MODULE, start_link, [[Name, MessageId, ConsumerGroupName]]},
+            {?MODULE, start_link, [[Name, ConsumerGroupName]]},
         restart => permanent,
         shutdown => brutal_kill,
         type => worker,
         modules => [?MODULE]
     }.
 
-start_link(Args = [Name, _MessageId, _ConsumerGroupName]) ->
+start_link(Args = [Name, _ConsumerGroupName]) ->
    gen_server:start_link({local, Name}, ?MODULE, Args, []).
 
-init(Args = [Name, MessageId, ConsumerGroupName]) ->
+init(Args = [Name, ConsumerGroupName]) ->
    pg2:join(ConsumerGroupName, self()),
-   logger:warning("~p ~p starting with ~p\n", [?MODULE, Name, MessageId]),
+   logger:set_primary_config(level, info),
+   logger:warning("~p ~p\n", [?MODULE, Name]),
    {ok, Args}.
 
 handle_info(tick, State) ->
    logger:info("~p\n", [tick]),
    {noreply, State};
-handle_info({MessageId, Content}, State = [_Name, MessageId]) ->
-   logger:info("~p ~p\n", [MessageId, Content]),
+handle_info({measurements, Measurements}, State) ->
+   logger:info("~p\n", Measurements),
    {noreply, State}.
 
 %%%%%%%%%%%
