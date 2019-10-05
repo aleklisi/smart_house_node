@@ -35,10 +35,10 @@ init(State) ->
         ?PROCESS_GROUP_NAME := ProcessGroupName
     } = State,
     InitState = erlang:apply(InitFun, [State | InitFunArgs]),
-    lager:warning("Passive component ~p starting", [Id]),
+    logger:warning("Passive component ~p starting", [Id]),
     pg2:create(ProcessGroupName),
     pg2:join(ProcessGroupName, self()),
-    lager:info("Passive component ~p joining group ~p", [Id, ProcessGroupName]),
+    logger:info("Passive component ~p joining group ~p", [Id, ProcessGroupName]),
     {ok, InitState}.
 
 handle_info({?MESSAGE, Message}, State) ->
@@ -49,7 +49,7 @@ handle_info({?MESSAGE, Message}, State) ->
     NewState = erlang:apply(ActionFun, [State, Message | ActionFunArgs]),
     {noreply, NewState};
 handle_info(Message, _State) ->
-    lager:error("Unexpected message ~p", [Message]),
+    logger:error("Unexpected message ~p", [Message]),
     erlang:error("Not implemented").
 
 handle_call(_Args, _From, _State) ->
@@ -59,5 +59,5 @@ handle_cast(_Args, _State) ->
     erlang:error("Not implemented").
 
 terminate(Reason, _State) ->
-    lager:error("Passive component terminated with reason ~p", [Reason]),
+    logger:error("Passive component terminated with reason ~p", [Reason]),
     ok.

@@ -14,13 +14,12 @@ exometer_init_metric(MeasurementName) ->
     R = exometer:new(MetricName, histogram),
     exometer_report:subscribe(exometer_report_graphite,
 			      MetricName, [mean, min, max, median], 10000),
-    lager:info("Exometer init ~p\tMetricName = ~p\n",
-	       [R, MetricName]),
+    logger:debug("Exometer init ~p\tMetricName = ~p\n", [R, MetricName]),
     R.
 
 exometer_write(MetricName, Value) ->
     R = exometer:update(MetricName, Value),
-    lager:debug("Exometer write ~p\tMetricName = ~p\n",
+    logger:debug("Exometer write ~p\tMetricName = ~p\n",
 	       [R, MetricName]),
     R.
 

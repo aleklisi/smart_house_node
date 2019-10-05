@@ -31,7 +31,7 @@ init(Args) ->
         speed := Speed
     } = Args,
     SerialPort = serial:start([{open, DevicePath}, {speed, Speed}]),
-    lager:warning("Sensor serial starting", []),
+    logger:warning("Sensor serial starting", []),
     {ok, Args#{?SERIAL => SerialPort, ?JSON_LIST => []}}.
 
 handle_info({data, Bytes}, State = #{ ?PROCESS_GROUP_NAME := ProcessGroupName}) ->
@@ -58,5 +58,5 @@ handle_cast(_Args, _State) ->
     erlang:error("Not implemented").
 
 terminate(Reason, _State) ->
-    lager:error("Sensor serial terminated with reason ~p", [Reason]),
+    logger:error("Sensor serial terminated with reason ~p", [Reason]),
     ok.
