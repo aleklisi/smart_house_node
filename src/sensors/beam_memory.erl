@@ -3,11 +3,11 @@
 -export([
     child_spec/1,
     init/1,
-    take_measurements/2]).
+    take_measurements/1]).
 
 -ignore_xref([child_spec/1,
     init/1,
-    take_measurements/2]).
+    take_measurements/1]).
 
 child_spec(Config) ->
     #{name := Name} = Config,
@@ -24,7 +24,7 @@ child_spec(Config) ->
 init(_Args) ->
     ok.
 
-take_measurements(_InitResult, _MeasurementArgs) ->
+take_measurements(_State) ->
     [
         {total_beam_memory, erlang:memory(total)},
         {atom_memory, erlang:memory(atom)},

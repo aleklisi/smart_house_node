@@ -1,4 +1,4 @@
--module(part_sup).
+-module(pipe_sup).
 
 -author('alek.lisiecki@gmail.com').
 
@@ -30,7 +30,7 @@ start_link(Config) ->
 init(Config) ->
     Children = lists:map(fun make_child/1, Config),
     {ok, {#{
-        strategy => one_for_one,
+        strategy => rest_for_one,
         intensity => 0,
         period => 1
     }, Children}}.

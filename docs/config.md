@@ -7,7 +7,7 @@ ProdGroupName :: atom()
 ProdGroupNames :: [ProdGroupName]
 Children :: [Child]
 Opts :: map() | [term()]
-Child :: {ProcessModule, Opts} | {part_sup, {Name, Children}}
+Child :: {ProcessModule, Opts} | {pipe_sup, {Name, Children}}
 ```
 Add this to your `sys.config` file: 
 ```erlang
@@ -17,7 +17,7 @@ Add this to your `sys.config` file:
 ## Generic supervisor 
 This supervisor is used to group processes logically in supervision tree.
 ```erlang
-{part_sup, {Name, Children}}
+{pipe_sup, {Name, Children}}
 ```
 ## Producers
 These are workers that provide trigger for further system actions.

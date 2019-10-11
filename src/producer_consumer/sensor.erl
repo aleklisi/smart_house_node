@@ -33,11 +33,9 @@ init([Config]) ->
 handle_info(tick, State) ->
     #{
         producer_groups := ProducerGroups,
-        init_result := InitResult,
-        measurement_module := MeasurementModule,
-        measurement_args := MeasurementArgs
+        measurement_module := MeasurementModule
     } = State,
-    Measurements = MeasurementModule:take_measurements(InitResult, MeasurementArgs),
+    Measurements = MeasurementModule:take_measurements(State),
     ProcessesGroups = lists:map(fun pg2:get_local_members/1, ProducerGroups),
     MsgReceivers = lists:flatten(ProcessesGroups),
     lists:map(fun(Rcvr) -> Rcvr ! {measurements, Measurements} end, MsgReceivers),
