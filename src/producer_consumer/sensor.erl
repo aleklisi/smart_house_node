@@ -44,7 +44,7 @@ handle_info(Info, _State) ->
    erlang:error({unexpected_message, Info}).
 
 %%%%%%%%%%%
-% Not used 
+% Not used
 %%%%%%%%%%%
 
 handle_call(_Request, _From, State) ->

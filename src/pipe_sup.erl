@@ -16,7 +16,7 @@
 child_spec({Name, Children}) ->
     #{
         id => Name,
-        start => 
+        start =>
             {?MODULE, start_link, [Children]},
         restart => permanent,
         shutdown => brutal_kill,

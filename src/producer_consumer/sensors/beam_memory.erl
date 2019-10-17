@@ -11,7 +11,7 @@ child_spec(Config) ->
     #{name := Name} = Config,
     #{
         id => Name,
-        start => 
+        start =>
             {sensor, start_link, [Config]},
         restart => permanent,
         shutdown => brutal_kill,

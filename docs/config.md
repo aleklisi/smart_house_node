@@ -9,12 +9,12 @@ Children :: [Child]
 Opts :: map() | [term()]
 Child :: {ProcessModule, Opts} | {pipe_sup, {Name, Children}}
 ```
-Add this to your `sys.config` file: 
+Add this to your `sys.config` file:
 ```erlang
 {smart_house_node,[
 {config, Children}]
 ```
-## Generic supervisor 
+## Generic supervisor
 This supervisor is used to group processes logically in supervision tree.
 ```erlang
 {pipe_sup, {Name, Children}}
@@ -94,7 +94,7 @@ These are the endpoints for the processed data.
 ### console_writer
 This worker logs any input it gets.
 ```erlang
-{logger_reporter, 
+{logger_reporter,
                     #{
                         name => ProcName,
                         reporter_module => logger_reporter,

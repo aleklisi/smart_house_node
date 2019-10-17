@@ -28,7 +28,7 @@ handle_info(Info, State = #{reporter_module := ReporterModule}) ->
     {noreply, NewState}.
 
 %%%%%%%%%%%
-% Not used 
+% Not used
 %%%%%%%%%%%
 
 handle_call(_Request, _From, State) ->

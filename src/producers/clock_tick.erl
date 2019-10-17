@@ -20,7 +20,7 @@
 child_spec([Name, SendAfter, ProcGroupName]) ->
     #{
         id => Name,
-        start => 
+        start =>
             {?MODULE, start_link, [[Name, SendAfter, ProcGroupName]]},
         restart => permanent,
         shutdown => brutal_kill,
@@ -45,7 +45,7 @@ handle_info(Info, _State) ->
     erlang:error({"Unexpected message", Info}).
 
 %%%%%%%%%%%
-% Not used 
+% Not used
 %%%%%%%%%%%
 
 handle_call(_Request, _From, State) ->

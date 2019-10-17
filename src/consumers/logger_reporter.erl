@@ -13,7 +13,7 @@ child_spec(Config) ->
     } = Config,
     #{
         id => Name,
-        start => 
+        start =>
             {reporter, start_link, [Config]},
         restart => permanent,
         shutdown => brutal_kill,
@@ -21,7 +21,7 @@ child_spec(Config) ->
         modules => [?MODULE, reporter]
     }.
 
-init(_) -> 
+init(_) ->
     logger:set_module_level(?MODULE, all).
 
 handle_info(Info, State) ->

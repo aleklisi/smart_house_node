@@ -4,9 +4,7 @@
 
 -behavior(supervisor).
 
--ignore_xref([
-    child_spec/1,
-    start_link/1]).
+-ignore_xref([start_link/1]).
 
 -export([
     start_link/1,

@@ -11,7 +11,7 @@ child_spec(Config) ->
     #{name := Name} = Config,
     #{
         id => Name,
-        start => 
+        start =>
             {sensor, start_link, [Config]},
         restart => permanent,
         shutdown => brutal_kill,
@@ -33,11 +33,11 @@ get_temperature(SensorPid) ->
     MSB = read(msb, char, unsigned, SensorPid),	
     LSB = read(lsb, char, unsigned, SensorPid),	
     UT = MSB bsl 8 + LSB,	
-    X1 = 
+    X1 =
         (UT - read(ac6, short, unsigned, SensorPid))
         * read(ac5, short, unsigned, SensorPid)
         / math:pow(2, 15),
-    X2 = 
+    X2 =
         read(mc, short, signed, SensorPid)
         * math:pow(2, 11)
         / (X1 + read(md, short, signed, SensorPid)),
