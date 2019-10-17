@@ -52,9 +52,10 @@ This worker logs tick or measurement input which it gets.
 {console_writer, [ProcName, ProcGroupName]}
 ```
 ### bmp_180
-This worker allows to control temperature plugged into i2c.
+This worker allows to control temperature plugged into i2c. Implementation based on the (docs)[https://cdn-shop.adafruit.com/datasheets/BST-BMP180-DS000-09.pdf].
 
 WARNING! Currently only temperature is supported only!
+
 ```erlang
 Device :: "i2c-1" | "i2c-0"
 
