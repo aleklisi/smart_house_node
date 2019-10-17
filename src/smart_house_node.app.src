@@ -6,12 +6,10 @@
   {applications,
    [kernel,
     stdlib,
-    exometer,
+    % exometer,
     erlang_ale
    ]},
-  {env,[
-      {exometer_predefined, []}
-  ]},
+  {env,[]},
   	{modules, []},
 
   {licenses, ["Apache 2.0"]},
