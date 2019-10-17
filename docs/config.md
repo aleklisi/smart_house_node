@@ -45,11 +45,18 @@ This worker allows to control BEAM memory.
 	}},
 ```
 ## Consumers
-These are the endpoints for the prcessed data.
+These are the endpoints for the processed data.
 ### console_writer
-This worker logs tick or measurement input which it gets.
+This worker logs any input it gets.
 ```erlang
-{console_writer, [ProcName, ProcGroupName]}
+{logger_reporter, 
+                    #{
+                        name => ProcName,
+                        reporter_module => logger_reporter,
+                        reporter_init_args => [],
+                        consumer_group => ProcGroupName
+                    }
+                }
 ```
 ### bmp_180
 This worker allows to control temperature plugged into i2c. Implementation based on the (docs)[https://cdn-shop.adafruit.com/datasheets/BST-BMP180-DS000-09.pdf].
