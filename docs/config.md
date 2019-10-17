@@ -91,13 +91,27 @@ This worker allows to monitor temperature RPi of CPU.
 
 ## Consumers
 These are the endpoints for the processed data.
-### console_writer
+### logger_reporter
 This worker logs any input it gets.
 ```erlang
 {logger_reporter,
                     #{
                         name => ProcName,
                         reporter_module => logger_reporter,
+                        reporter_init_args => [],
+                        consumer_group => ProcGroupName
+                    }
+                }
+```
+
+### exometer_reporter
+This worker sends data through exometer to graphite.
+Requires exomiter application up and running.
+```erlang
+{exometer_reporter,
+                    #{
+                        name => ProcName,
+                        reporter_module => exometer_reporter,
                         reporter_init_args => [],
                         consumer_group => ProcGroupName
                     }
