@@ -16,9 +16,7 @@ addons:
 
 install: rebar3 compile
 script:
-  - rebar3 xref
-  - rebar3 dialyzer
-  - rebar3 gradualizer
+  - make all_checks
 
 cache:
   directories:
