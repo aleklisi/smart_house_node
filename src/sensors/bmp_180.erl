@@ -21,36 +21,36 @@ child_spec(Config) ->
         modules => [?MODULE, sensor]
     }.
 
-init(#{device_name := DeviceName, sensor_name := SensorName}) ->	
+init([#{device_name := DeviceName}]) ->
     {ok, IoExpander} = i2c:start_link(DeviceName, 16#77),	
-    register(SensorName, IoExpander),	
-    link(IoExpander).	
+    link(IoExpander),
+    IoExpander.
 
-take_measurements(#{sensor_name := SensorName}) ->
-    [{SensorName, get_temperature(SensorName)}].
+take_measurements(#{init_result := SensorPid}) ->
+    [{bmp180_temperature, get_temperature(SensorPid)}].
 
-get_temperature(SensorName) ->	
-    ok = i2c:write(SensorName, <<16#f4, 16#2e>>),	
+get_temperature(SensorPid) ->	
+    ok = i2c:write(SensorPid, <<16#f4, 16#2e>>),	
     timer:sleep(30),	
-    MSB = read(msb, char, unsigned, SensorName),	
-    LSB = read(lsb, char, unsigned, SensorName),	
+    MSB = read(msb, char, unsigned, SensorPid),	
+    LSB = read(lsb, char, unsigned, SensorPid),	
     UT = MSB bsl 8 + LSB,	
     X1 = 
-        (UT - read(ac6, short, unsigned, SensorName))
-        * read(ac5, short, unsigned, SensorName)
+        (UT - read(ac6, short, unsigned, SensorPid))
+        * read(ac5, short, unsigned, SensorPid)
         / math:pow(2, 15),
     X2 = 
-        read(mc, short, signed, SensorName)
+        read(mc, short, signed, SensorPid)
         * math:pow(2, 11)
-        / (X1 + read(md, short, signed, SensorName)),
+        / (X1 + read(md, short, signed, SensorPid)),
     B5 = X1 + X2,	
-    T = (B5 + 8) / math:pow(2, 4) / 4, % I do not know why but the result is 4 times too big	
+    T = (B5 + 8) / math:pow(2, 4) / 4, % I do not know why but the result is 4 times too big
     T.	
 
-read(Register, Size, Signed, SensorName) ->	
+read(Register, Size, Signed, SensorPid) ->	
     RegisterAddress = get_register(Register),	
-    i2c:write(SensorName, <<RegisterAddress>>),	
-    Binary = i2c:read(SensorName, bytes_size(Size)),	
+    i2c:write(SensorPid, <<RegisterAddress>>),	
+    Binary = i2c:read(SensorPid, bytes_size(Size)),	
     Result = parse(Binary, Size, Signed),	
     Result.	
 
