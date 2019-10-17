@@ -1,4 +1,4 @@
--module(sensor_behaviour).
+-module(reporter_behaviour).
 
 -ignore_xref([behaviour_info/1]).
 
@@ -6,5 +6,5 @@
 
 -callback init(InitSensorArgs :: any()) -> InitResult :: any().
 
--callback take_measurements(GenServerState :: any()) ->
-    [{MeasurementName :: atom(), Result :: float() | integer()}].
+-callback handle_info(Info :: any(), State :: map()) ->
+    NewState :: map().
