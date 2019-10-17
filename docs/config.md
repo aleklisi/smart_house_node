@@ -44,22 +44,8 @@ This worker allows to control BEAM memory.
         producer_groups => ProcGroupNames
 	}},
 ```
-## Consumers
-These are the endpoints for the processed data.
-### console_writer
-This worker logs any input it gets.
-```erlang
-{logger_reporter, 
-                    #{
-                        name => ProcName,
-                        reporter_module => logger_reporter,
-                        reporter_init_args => [],
-                        consumer_group => ProcGroupName
-                    }
-                }
-```
 ### bmp_180
-This worker allows to control temperature plugged into i2c. Implementation based on the (docs)[https://cdn-shop.adafruit.com/datasheets/BST-BMP180-DS000-09.pdf].
+This worker allows to monitor temperature plugged into i2c. Implementation based on the (docs)[https://cdn-shop.adafruit.com/datasheets/BST-BMP180-DS000-09.pdf].
 
 WARNING! Currently only temperature is supported only!
 
@@ -87,3 +73,33 @@ See this for diagnosis https://pinout.xyz/pinout/i2c.
 | GND | Ground | 6 |
 | SCL | BCM 2 (Data) | 5 |
 | SDA | BCM 3 (Clock) | 3 |
+
+### cpu_temperature
+This worker allows to monitor temperature RPi of CPU.
+```erlang
+{cpu_temperature,
+	#{
+		name => ProcName,
+		init_module => cpu_temperature,
+		init_args => [],
+        measurement_module => cpu_temperature,
+        measurement_args => [],
+        consumer_groups => ProcGroupNames,
+        producer_groups => ProcGroupNames
+	}},
+```
+
+## Consumers
+These are the endpoints for the processed data.
+### console_writer
+This worker logs any input it gets.
+```erlang
+{logger_reporter, 
+                    #{
+                        name => ProcName,
+                        reporter_module => logger_reporter,
+                        reporter_init_args => [],
+                        consumer_group => ProcGroupName
+                    }
+                }
+```
