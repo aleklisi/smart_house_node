@@ -24,15 +24,15 @@ child_spec(Config) ->
 init(_) ->
     false.
 
-handle_info(Info, State = #{init_result := false}) ->
+handle_info(Msg = {measurements, Info}, State = #{init_result := false}) ->
     {MetricsNames, _} = lists:unzip(Info),
     lists:foreach(
         fun(MetricName) ->
             exometer_init_metric(MetricName)
         end, MetricsNames),
-     self() ! Info,
+     self() ! Msg,
     State#{init_result => true};
-handle_info(Info, State = #{init_result := true}) ->
+handle_info({measurements, Info}, State = #{init_result := true}) ->
     lists:foreach(
         fun({MeasurementName, Value}) ->
             exometer_write([MeasurementName], Value)
