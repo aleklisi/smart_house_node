@@ -1,11 +1,9 @@
 -module(bmp_180).
 
+-behavior(sensor_behaviour).
+
 -export([
     child_spec/1,
-    init/1,
-    take_measurements/1]).
-
--ignore_xref([child_spec/1,
     init/1,
     take_measurements/1]).
 
