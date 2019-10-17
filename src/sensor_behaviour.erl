@@ -7,4 +7,4 @@
 -callback init(InitSensorArgs :: any()) -> InitResult :: any().
 
 -callback take_measurements(GenServerState :: any()) ->
-    [{MeasumentName :: atom, Result :: float() | integer()}].
+    [{MeasumentName :: atom(), Result :: float() | integer()}].
