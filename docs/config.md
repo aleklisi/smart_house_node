@@ -45,7 +45,7 @@ This worker allows to control BEAM memory.
 	}},
 ```
 ### bmp_180
-This worker allows to monitor temperature plugged into i2c. Implementation based on the (docs)[https://cdn-shop.adafruit.com/datasheets/BST-BMP180-DS000-09.pdf].
+This worker allows to monitor temperature plugged into i2c. Implementation based on the [docs](https://cdn-shop.adafruit.com/datasheets/BST-BMP180-DS000-09.pdf).
 
 WARNING! Currently only temperature is supported only!
 
