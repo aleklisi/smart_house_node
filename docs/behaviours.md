@@ -10,7 +10,7 @@ You need to implement following functions:
  - take_measurements/1
 
 ### child_spec/1
-Returns (childspec)[http://erlang.org/doc/man/supervisor.html#type-child_spec] for your worker.
+Returns [childspec](http://erlang.org/doc/man/supervisor.html#type-child_spec) for your worker.
 
 ### init/1
 Takes a one element list with whatever is passed inside and returns anything.
@@ -27,7 +27,7 @@ You need to implement following functions:
  - handle_info/2
 
 ### child_spec/1
-Returns (childspec)[http://erlang.org/doc/man/supervisor.html#type-child_spec] for your worker.
+Returns [childspec](http://erlang.org/doc/man/supervisor.html#type-child_spec) for your worker.
 
 ### init/1
 Takes a one element list with whatever is passed inside and returns anything.
