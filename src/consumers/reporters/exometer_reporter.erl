@@ -21,14 +21,16 @@ child_spec(Config) ->
         modules => [?MODULE, reporter]
     }.
 
-init(_) ->
-    false.
+init([]) ->
+    {false, histogram};
+init([MetricType]) ->
+    {false, MetricType}.
 
-handle_info(Msg = {measurements, Info}, State = #{init_result := false}) ->
+handle_info(Msg = {measurements, Info}, State = #{init_result := {false, MetricType}}) ->
     {MetricsNames, _} = lists:unzip(Info),
     lists:foreach(
         fun(MetricName) ->
-            exometer_init_metric(MetricName)
+            exometer_init_metric(MetricName, MetricType)
         end, MetricsNames),
      self() ! Msg,
     State#{init_result => true};
@@ -39,9 +41,9 @@ handle_info({measurements, Info}, State = #{init_result := true}) ->
         end, Info),
     State.
 
-exometer_init_metric(MeasurementName) ->
+exometer_init_metric(MeasurementName, MetricType) ->
     MetricName = [MeasurementName],
-    R = exometer:new(MetricName, histogram),
+    R = exometer:new(MetricName, MetricType),
     exometer_report:subscribe(exometer_report_graphite,
 			      MetricName, [mean, min, max, median], 10000),
     R.	
