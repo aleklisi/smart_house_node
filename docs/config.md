@@ -89,6 +89,25 @@ This worker allows to monitor temperature RPi of CPU.
 	}},
 ```
 
+### gpio_state
+This worker allows to monitor GPIO input state.
+GpioPin is pin number on board see [this](https://www.raspberrypi.org/documentation/usage/gpio/)
+When the circuit os opened, returns 1 else returns 0.
+```erlang 
+GpioPin :: 2 | 3 | 4 ... 27
+{gpio_state,
+    #{
+        name => ProcName,
+        init_module => gpio_state,
+        init_args => [GpioPin],
+        measurement_module => gpio_state,
+        measurement_args => [],
+        consumer_groups => ProcGroupNames,
+        producer_groups => ProcGroupNames
+    }},
+```
+
+
 ## Consumers
 These are the endpoints for the processed data.
 ### logger_reporter
