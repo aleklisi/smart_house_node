@@ -29,16 +29,19 @@ child_spec([Name, SendAfter, ProcGroupName]) ->
     }.
 
 start_link([Name | T]) ->
+    logger:info("The clock ~p starting", [Name]),
    gen_server:start_link({local, Name}, ?MODULE, T, []).
 
 init(Args = [SendAfter, ProcGroupName]) ->
     pg2:create(ProcGroupName),
     erlang:send_after(SendAfter, self(), tick),
+    logger:info("The clock sending tick to ~p group started", [ProcGroupName]),
     {ok, Args}.
 
 handle_info(tick, State = [SendAfter, ProcGroupName]) ->
     erlang:send_after(SendAfter, self(), tick),
     Consumers = pg2:get_local_members(ProcGroupName),
+    logger:debug("The clock sending tick to ~p", [Consumers]),
     lists:foreach(fun(Pid) -> Pid ! tick end, Consumers),
    {noreply, State};
 handle_info(Info, _State) ->
