@@ -126,6 +126,9 @@ This worker logs any input it gets.
 ### exometer_reporter
 This worker sends data through exometer to graphite.
 Requires exomiter application up and running.
+
+WARNING! MaybeDiagramType is not supported YET!!
+
 `MaybeDiagramType` is an empty list or a 1 element list containing exometer probe type, see [this](https://github.com/Feuerlabs/exometer#built-in-entries-and-probes) for further details. `histogram` is a default.
 ```erlang
 MaybeDiagramType = [] | [ counter | fast_counter | gauge | histogram ]
