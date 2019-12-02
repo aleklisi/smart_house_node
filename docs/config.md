@@ -107,6 +107,21 @@ GpioPin :: 2 | 3 | 4 ... 27
     }},
 ```
 
+### ds1820_temperature
+This worker allows to monitor temperature plugged into 1-wire interface.
+
+```erlang
+{ds1820_temperature,
+    #{
+        name => room_temperature,
+        init_module => ds1820_temperature,
+        init_args => [],
+        measurement_module => ds1820_temperature,
+        measurement_args => [],
+        consumer_groups => [room_temperature_tick_group],
+        producer_groups => [room_temperature_reporter_group]
+    }},
+```
 
 ## Consumers
 These are the endpoints for the processed data.
