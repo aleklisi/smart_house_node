@@ -113,13 +113,13 @@ This worker allows to monitor temperature plugged into 1-wire interface.
 ```erlang
 {ds1820_temperature,
     #{
-        name => room_temperature,
+        name => ProcName,
         init_module => ds1820_temperature,
         init_args => [],
         measurement_module => ds1820_temperature,
         measurement_args => [],
-        consumer_groups => [room_temperature_tick_group],
-        producer_groups => [room_temperature_reporter_group]
+        consumer_groups => ProcGroupNames,
+        producer_groups => ProcGroupNames
     }},
 ```
 
