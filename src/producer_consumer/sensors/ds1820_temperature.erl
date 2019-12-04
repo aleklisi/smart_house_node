@@ -1,6 +1,6 @@
 -module(ds1820_temperature).
 
--include_lib("eunit/include/eunit.hrl").
+% -include_lib("eunit/include/eunit.hrl").
 
 -behavior(sensor_behaviour).
 
@@ -44,21 +44,21 @@ get_temperature(DeviceId) ->
 
 %% EUNIT TESTs
 
-get_device_id_test() ->
-    Str = "28-031097791404\nw1_bus_master1\n",
-    Folders = string:split(Str, "\n", all),
-    [DevId] = lists:filter(fun starts_with_28/1, Folders),
-    ?assertEqual("28-031097791404", DevId).
+% get_device_id_test() ->
+%     Str = "28-031097791404\nw1_bus_master1\n",
+%     Folders = string:split(Str, "\n", all),
+%     [DevId] = lists:filter(fun starts_with_28/1, Folders),
+%     ?assertEqual("28-031097791404", DevId).
 
-get_temperature_test() ->
-    {ok, MP} = re:compile("t=(.*)", [ucp]),
-    CatResult = "7f 01 55 05 7f a5 a5 66 3d : crc=3d "
-		"YES\n7f 01 55 05 7f a5 a5 66 3d t=23937",
-    Temperature = case re:run(CatResult, MP,
-			      [global, {capture, all, list}])
-		      of
-		    {match, [[_, StringTemp]]} ->
-			list_to_integer(StringTemp);
-		    nomatch -> []
-		  end,
-    ?assertEqual(23937, Temperature).
+% get_temperature_test() ->
+%     {ok, MP} = re:compile("t=(.*)", [ucp]),
+%     CatResult = "7f 01 55 05 7f a5 a5 66 3d : crc=3d "
+% 		"YES\n7f 01 55 05 7f a5 a5 66 3d t=23937",
+%     Temperature = case re:run(CatResult, MP,
+% 			      [global, {capture, all, list}])
+% 		      of
+% 		    {match, [[_, StringTemp]]} ->
+% 			list_to_integer(StringTemp);
+% 		    nomatch -> []
+% 		  end,
+%     ?assertEqual(23937, Temperature).
