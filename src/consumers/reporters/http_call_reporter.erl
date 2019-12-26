@@ -31,7 +31,5 @@ handle_info({measurements, Info}, State = State = #{init_result := Url}) ->
     Headers = [],
     ContentType = "application/json",
     Request = {Url, Headers, ContentType, Body},
-    R = httpc:request(post, Request, [], []),
-    logger:error("~p", [Body]),
-    logger:error("~p", [R]),
+    httpc:request(post, Request, [], []),
     State.
