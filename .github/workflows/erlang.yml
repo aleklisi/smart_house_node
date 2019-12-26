@@ -1,0 +1,23 @@
+name: Erlang CI
+
+on: [push]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    container:
+      image: erlang:22.0.7
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Compile
+      run: rebar3 compile
+    - name: Run xref
+      run: rebar3 xref
+    - name: Run type system checks
+      run: rebar3 do gradualizer, dialyzer
+    - name: Run tests
+      run: rebar3 do eunit, ct
