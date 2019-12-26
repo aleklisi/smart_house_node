@@ -156,3 +156,17 @@ MaybeDiagramType = [] | [ counter | fast_counter | gauge | histogram ]
                     }
                 }
 ```
+
+### http_call_reporter
+This reporter sends data via HTTP post requests.
+
+```erlang
+Url = string()
+{http_call_reporter, #{
+                            name => ProcName,
+                            reporter_module => http_call_reporter,
+                            reporter_init_args => [Url],
+                            consumer_group => ProcGroupName
+                        }
+                    }
+```
