@@ -19,5 +19,5 @@ jobs:
       run: rebar3 xref
     - name: Run type system checks
       run: rebar3 do gradualizer, dialyzer
-    - name: Run tests
-      run: rebar3 do eunit, ct
+    # - name: Run tests
+    #   run: rebar3 do eunit, ct
