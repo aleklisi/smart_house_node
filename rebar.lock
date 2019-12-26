@@ -36,14 +36,7 @@
        {ref,"38e2cce7c64ce1f0a3a918d90394cfc0a940b1ba"}},
   2},
  {<<"goldrush">>,{pkg,<<"goldrush">>,<<"0.1.9">>},1},
- {<<"jiffy">>,
-  {git,"git://github.com/davisp/jiffy.git",
-       {ref,"137d3d94b6ee10001d761d412cbbe7f665680c98"}},
-  1},
- {<<"jsx">>,
-  {git,"https://github.com/talentdeficit/jsx.git",
-       {ref,"3074d4865b3385a050badf7828ad31490d860df5"}},
-  0},
+ {<<"jiffy">>,{pkg,<<"jiffy">>,<<"1.0.1">>},0},
  {<<"lager">>,{pkg,<<"lager">>,<<"3.6.8">>},0},
  {<<"meck">>,
   {git,"git://github.com/eproxus/meck.git",
@@ -68,5 +61,6 @@
 [
 {pkg_hash,[
  {<<"goldrush">>, <<"F06E5D5F1277DA5C413E84D5A2924174182FB108DABB39D5EC548B27424CD106">>},
+ {<<"jiffy">>, <<"4F25639772CA41202F41BA9C8F6CA0933554283DD4742C90651E03471C55E341">>},
  {<<"lager">>, <<"897EFC7679BB82383448646C96768CDC4E747464DD18B999C7AACA485686B0DA">>}]}
 ].
