@@ -123,6 +123,48 @@ This worker allows to monitor temperature plugged into 1-wire interface.
     }},
 ```
 
+### DHT11
+
+Current implementation is based on Python so it requires following before first start:
+
+```bash
+cd ~
+sudo apt-get update
+sudo apt-get install build-essential python3-dev python3-setuptools -y
+git clone https://github.com/adafruit/Adafruit_Python_DHT.git
+cd Adafruit_Python_DHT
+sudo python3 setup.py install
+cp ~/Adafruit_Python_DHT/examples/AdafruitDHT.py ~/Documents/Erlang/smart_house_node/priv/
+```
+
+To test if it works try:
+
+```
+cd examples
+python3 AdafruitDHT.py 11 14
+```
+The example script takes two parameters. The first is the sensor type so is set to “11” to represent the DHT11. The second is the GPIO number so for my example I am using “17” for GPIO17. You can change this if you are using a different GPIO pin for your data/out wire.
+
+You should see an output similar to this :
+
+```
+Temp=22.0* Humidity=68.0%
+```
+
+```erlang
+{dht_11,
+    #{
+        name => ProcName,
+        init_module => dht_11,
+        init_args => #{gpio => GpioPin},
+        measurement_module => dht_11,
+        measurement_args => [],
+        consumer_groups => ProcGroupNames,
+        producer_groups => ProcGroupNames
+    }
+},
+```
+
 ## Consumers
 These are the endpoints for the processed data.
 ### logger_reporter
